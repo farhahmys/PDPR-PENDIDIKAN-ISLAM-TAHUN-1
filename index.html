@@ -1,0 +1,2701 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ULANGKAJI PENDIDIKAN ISLAM TAHUN 1</title>
+
+    <!-- =========================================================
+         TAILWIND CSS CDN
+    ========================================================== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Baloo 2', cursive;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(255,255,255,.9) 0 4%, transparent 5%),
+                radial-gradient(circle at 90% 20%, rgba(255,255,255,.8) 0 5%, transparent 6%),
+                radial-gradient(circle at 50% 90%, rgba(255,255,255,.7) 0 6%, transparent 7%),
+                linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 50%, #fef9c3 100%);
+        }
+
+        .glass {
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-main {
+            transition: all .2s ease;
+        }
+
+        .btn-main:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .btn-main:active:not(:disabled) {
+            transform: scale(.97);
+        }
+
+        .answer-btn {
+            transition: all .2s ease;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+        }
+
+        .shake {
+            animation: shake .45s ease;
+        }
+
+        @keyframes shake {
+            0%,100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-10px);
+            }
+
+            40% {
+                transform: translateX(10px);
+            }
+
+            60% {
+                transform: translateX(-8px);
+            }
+
+            80% {
+                transform: translateX(8px);
+            }
+        }
+
+        .pop {
+            animation: pop .4s ease;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(.7);
+                opacity: 0;
+            }
+
+            80% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .pulse-danger {
+            animation: dangerPulse .8s infinite;
+        }
+
+        @keyframes dangerPulse {
+            0%,100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .55;
+            }
+        }
+
+        /* CONFETTI */
+        #confetti-container {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti {
+            position: absolute;
+            top: -30px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform:
+                    translateY(110vh)
+                    rotate(720deg);
+            }
+        }
+
+        /* SIJIL */
+        #certificate {
+            display: none;
+        }
+
+        @media print {
+
+            body * {
+                visibility: hidden !important;
+            }
+
+            #certificate,
+            #certificate * {
+                visibility: visible !important;
+            }
+
+            #certificate {
+                display: flex !important;
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                min-height: 100vh;
+            }
+
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<!-- =========================================================
+     CONFETTI
+========================================================== -->
+
+<div id="confetti-container"></div>
+
+
+<script>
+/* ============================================================
+   BANK SOALAN
+   ============================================================
+   
+   GURU BOLEH MENGUBAH SOALAN DI BAHAGIAN INI.
+
+   FORMAT:
+   
+   {
+       soalan: "Tulis soalan di sini",
+       pilihan: [
+           "Pilihan jawapan 1",
+           "Pilihan jawapan 2"
+       ],
+       jawapanBetul: "Pilihan jawapan 1"
+   }
+
+   PASTIKAN jawapanBetul SAMA TEPAT dengan salah satu
+   pilihan jawapan.
+
+============================================================ */
+
+const BANK_SOALAN = [
+
+    /* -------------------------------
+       MAKSUD SELAWAT
+    -------------------------------- */
+
+    {
+        soalan: "Apakah maksud selawat?",
+        pilihan: [
+            "Doa dan pujian kepada Rasulullah ﷺ",
+            "Doa untuk mendapat makanan"
+        ],
+        jawapanBetul: "Doa dan pujian kepada Rasulullah ﷺ"
+    },
+
+    {
+        soalan: "Selawat ditujukan kepada siapa?",
+        pilihan: [
+            "Rasulullah ﷺ",
+            "Kawan sahaja"
+        ],
+        jawapanBetul: "Rasulullah ﷺ"
+    },
+
+    {
+        soalan: "Selawat ialah amalan yang menunjukkan kita...",
+        pilihan: [
+            "Mencintai Rasulullah ﷺ",
+            "Tidak suka kepada Rasulullah ﷺ"
+        ],
+        jawapanBetul: "Mencintai Rasulullah ﷺ"
+    },
+
+
+    /* -------------------------------
+       CONTOH SELAWAT
+    -------------------------------- */
+
+    {
+        soalan: "Manakah contoh lafaz selawat?",
+        pilihan: [
+            "اللهم صل على محمد",
+            "الحمد لله"
+        ],
+        jawapanBetul: "اللهم صل على محمد"
+    },
+
+    {
+        soalan: "Apakah yang boleh kita ucapkan apabila berselawat?",
+        pilihan: [
+            "Allahumma salli 'ala Muhammad",
+            "Selamat pagi sahaja"
+        ],
+        jawapanBetul: "Allahumma salli 'ala Muhammad"
+    },
+
+    {
+        soalan: "Antara berikut, yang manakah merupakan amalan selawat?",
+        pilihan: [
+            "Berselawat kepada Nabi Muhammad ﷺ",
+            "Bermain tanpa mengingati Allah"
+        ],
+        jawapanBetul: "Berselawat kepada Nabi Muhammad ﷺ"
+    },
+
+
+    /* -------------------------------
+       KEPENTINGAN AMAL SELAWAT
+    -------------------------------- */
+
+    {
+        soalan: "Mengapakah kita berselawat kepada Rasulullah ﷺ?",
+        pilihan: [
+            "Sebagai tanda cinta dan hormat",
+            "Untuk bermain-main"
+        ],
+        jawapanBetul: "Sebagai tanda cinta dan hormat"
+    },
+
+    {
+        soalan: "Apakah kebaikan berselawat?",
+        pilihan: [
+            "Mendapat pahala",
+            "Mendapat dosa"
+        ],
+        jawapanBetul: "Mendapat pahala"
+    },
+
+    {
+        soalan: "Berselawat membantu kita mengingati...",
+        pilihan: [
+            "Rasulullah ﷺ",
+            "Permainan sahaja"
+        ],
+        jawapanBetul: "Rasulullah ﷺ"
+    },
+
+    {
+        soalan: "Berselawat merupakan amalan yang...",
+        pilihan: [
+            "Baik dan digalakkan",
+            "Tidak baik"
+        ],
+        jawapanBetul: "Baik dan digalakkan"
+    },
+
+
+    /* -------------------------------
+       ADAB BERSELAWAT
+    -------------------------------- */
+
+    {
+        soalan: "Apakah adab ketika berselawat?",
+        pilihan: [
+            "Berselawat dengan sopan",
+            "Bermain dan ketawa kuat"
+        ],
+        jawapanBetul: "Berselawat dengan sopan"
+    },
+
+    {
+        soalan: "Ketika berselawat kita hendaklah...",
+        pilihan: [
+            "Menghormati Rasulullah ﷺ",
+            "Bercakap kasar"
+        ],
+        jawapanBetul: "Menghormati Rasulullah ﷺ"
+    },
+
+    {
+        soalan: "Kita hendaklah berselawat dengan hati yang...",
+        pilihan: [
+            "Ikhlas",
+            "Sombong"
+        ],
+        jawapanBetul: "Ikhlas"
+    },
+
+    {
+        soalan: "Apabila berselawat, kita hendaklah menjaga...",
+        pilihan: [
+            "Adab dan kesopanan",
+            "Kekasaran"
+        ],
+        jawapanBetul: "Adab dan kesopanan"
+    },
+
+
+    /* -------------------------------
+       ADAB TERHADAP RASULULLAH ﷺ
+    -------------------------------- */
+
+    {
+        soalan: "Apakah adab kita terhadap Rasulullah ﷺ?",
+        pilihan: [
+            "Mencintai dan menghormati baginda",
+            "Menghina baginda"
+        ],
+        jawapanBetul: "Mencintai dan menghormati baginda"
+    },
+
+    {
+        soalan: "Kita hendaklah mencontohi...",
+        pilihan: [
+            "Akhlak Rasulullah ﷺ",
+            "Perbuatan yang buruk"
+        ],
+        jawapanBetul: "Akhlak Rasulullah ﷺ"
+    },
+
+    {
+        soalan: "Apabila nama Rasulullah ﷺ disebut, kita digalakkan...",
+        pilihan: [
+            "Berselawat",
+            "Bermain"
+        ],
+        jawapanBetul: "Berselawat"
+    },
+
+    {
+        soalan: "Antara berikut, yang manakah menunjukkan cinta kepada Rasulullah ﷺ?",
+        pilihan: [
+            "Mengamalkan ajaran baginda",
+            "Tidak mempedulikan ajaran baginda"
+        ],
+        jawapanBetul: "Mengamalkan ajaran baginda"
+    },
+
+
+    /* -------------------------------
+       AKIBAT ABAI SELAWAT
+    -------------------------------- */
+
+    {
+        soalan: "Apakah akibat jika kita tidak membiasakan diri berselawat?",
+        pilihan: [
+            "Kurang mengingati Rasulullah ﷺ",
+            "Lebih mengenali Rasulullah ﷺ"
+        ],
+        jawapanBetul: "Kurang mengingati Rasulullah ﷺ"
+    },
+
+    {
+        soalan: "Mengabaikan selawat menyebabkan kita...",
+        pilihan: [
+            "Kurang membiasakan diri dengan amalan yang baik",
+            "Mendapat banyak pahala daripada selawat"
+        ],
+        jawapanBetul: "Kurang membiasakan diri dengan amalan yang baik"
+    }
+
+];
+
+
+/* ============================================================
+   TETAPAN
+============================================================ */
+
+const JUMLAH_SOALAN = 20;
+const MASA_SOALAN = 60;
+const AMBANG_LULUS = 50;
+
+
+/* ============================================================
+   PEMBOLEH UBAH PERMAINAN
+============================================================ */
+
+let namaPelajar = "";
+let kelasPelajar = "";
+
+let soalanKuiz = [];
+let soalanSemasa = 0;
+
+let skor = 0;
+let masa = MASA_SOALAN;
+
+let pemasa = null;
+
+let rekodJawapan = [];
+
+let audioContext = null;
+
+
+/* ============================================================
+   FUNGSI ACAK
+============================================================ */
+
+function shuffle(array) {
+
+    const arr = [...array];
+
+    for (
+        let i = arr.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+        [arr[i], arr[j]] =
+            [arr[j], arr[i]];
+    }
+
+    return arr;
+}
+
+
+/* ============================================================
+   AUDIO
+============================================================ */
+
+function getAudioContext() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+    }
+
+    if (
+        audioContext.state ===
+        "suspended"
+    ) {
+
+        audioContext.resume();
+    }
+
+    return audioContext;
+}
+
+
+function bunyiBetul() {
+
+    try {
+
+        const ctx =
+            getAudioContext();
+
+        const notes = [
+            523.25,
+            659.25,
+            783.99
+        ];
+
+        notes.forEach(
+            (frequency, index) => {
+
+                const oscillator =
+                    ctx.createOscillator();
+
+                const gain =
+                    ctx.createGain();
+
+                oscillator.type =
+                    "sine";
+
+                oscillator.frequency.value =
+                    frequency;
+
+                const start =
+                    ctx.currentTime +
+                    index * 0.09;
+
+                gain.gain.setValueAtTime(
+                    0.0001,
+                    start
+                );
+
+                gain.gain.exponentialRampToValueAtTime(
+                    0.18,
+                    start + 0.03
+                );
+
+                gain.gain.exponentialRampToValueAtTime(
+                    0.0001,
+                    start + 0.25
+                );
+
+                oscillator.connect(gain);
+                gain.connect(ctx.destination);
+
+                oscillator.start(start);
+
+                oscillator.stop(
+                    start + 0.3
+                );
+            }
+        );
+
+    } catch (error) {
+
+        console.log(
+            "Audio tidak tersedia."
+        );
+    }
+}
+
+
+function bunyiSalah() {
+
+    try {
+
+        const ctx =
+            getAudioContext();
+
+        const oscillator =
+            ctx.createOscillator();
+
+        const gain =
+            ctx.createGain();
+
+        oscillator.type =
+            "sawtooth";
+
+        oscillator.frequency.setValueAtTime(
+            180,
+            ctx.currentTime
+        );
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            90,
+            ctx.currentTime + 0.25
+        );
+
+        gain.gain.setValueAtTime(
+            0.12,
+            ctx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            ctx.currentTime + 0.3
+        );
+
+        oscillator.connect(gain);
+        gain.connect(ctx.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            ctx.currentTime + 0.3
+        );
+
+    } catch (error) {
+
+        console.log(
+            "Audio tidak tersedia."
+        );
+    }
+}
+
+
+/* ============================================================
+   CONFETTI
+============================================================ */
+
+function confetti() {
+
+    const container =
+        document.getElementById(
+            "confetti-container"
+        );
+
+    container.innerHTML = "";
+
+    const simbol = [
+        "🎉",
+        "🎊",
+        "⭐",
+        "🌟",
+        "✨"
+    ];
+
+    for (
+        let i = 0;
+        i < 50;
+        i++
+    ) {
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+        item.className =
+            "confetti";
+
+        item.textContent =
+            simbol[
+                Math.floor(
+                    Math.random() *
+                    simbol.length
+                )
+            ];
+
+        item.style.left =
+            Math.random() * 100 + "%";
+
+        item.style.fontSize =
+            (16 +
+            Math.random() * 18) +
+            "px";
+
+        item.style.animationDuration =
+            (1.5 +
+            Math.random() * 2) +
+            "s";
+
+        item.style.animationDelay =
+            Math.random() * 0.3 +
+            "s";
+
+        container.appendChild(item);
+    }
+
+    setTimeout(
+        () => {
+            container.innerHTML = "";
+        },
+        4000
+    );
+}
+
+
+/* ============================================================
+   LOCAL STORAGE
+============================================================ */
+
+function simpanPercubaan() {
+
+    const peratus =
+        Math.round(
+            (skor / JUMLAH_SOALAN) *
+            100
+        );
+
+    const rekod = {
+
+        nama: namaPelajar,
+
+        kelas: kelasPelajar,
+
+        skor: skor,
+
+        jumlah: JUMLAH_SOALAN,
+
+        peratus: peratus,
+
+        tarikh:
+            new Date()
+                .toLocaleString(
+                    "ms-MY"
+                )
+    };
+
+    let sejarah = [];
+
+    try {
+
+        sejarah =
+            JSON.parse(
+                localStorage.getItem(
+                    "rekodPI_Tahun1"
+                ) || "[]"
+            );
+
+    } catch {
+
+        sejarah = [];
+    }
+
+    sejarah.push(rekod);
+
+    /* Simpan 20 percubaan terakhir */
+    if (sejarah.length > 20) {
+
+        sejarah =
+            sejarah.slice(-20);
+    }
+
+    localStorage.setItem(
+        "rekodPI_Tahun1",
+        JSON.stringify(sejarah)
+    );
+}
+
+
+/* ============================================================
+   PAPARAN SKRIN
+============================================================ */
+
+function hideAllScreens() {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.add(
+                "hidden"
+            );
+        });
+}
+
+
+function showScreen(id) {
+
+    hideAllScreens();
+
+    document
+        .getElementById(id)
+        .classList.remove(
+            "hidden"
+        );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* ============================================================
+   SEMAK NAMA DAN KELAS
+============================================================ */
+
+function semakInput() {
+
+    const nama =
+        document
+            .getElementById("nama")
+            .value
+            .trim();
+
+    const kelas =
+        document
+            .getElementById("kelas")
+            .value
+            .trim();
+
+    document
+        .getElementById("mulaBtn")
+        .disabled =
+        !(nama && kelas);
+}
+
+
+/* ============================================================
+   MULA
+============================================================ */
+
+function mulaKuiz() {
+
+    namaPelajar =
+        document
+            .getElementById("nama")
+            .value
+            .trim();
+
+    kelasPelajar =
+        document
+            .getElementById("kelas")
+            .value
+            .trim();
+
+    if (
+        !namaPelajar ||
+        !kelasPelajar
+    ) {
+        return;
+    }
+
+    getAudioContext();
+
+    showScreen(
+        "screenArahan"
+    );
+}
+
+
+/* ============================================================
+   MULA PERMAINAN
+============================================================ */
+
+function mulaPermainan() {
+
+    skor = 0;
+
+    soalanSemasa = 0;
+
+    rekodJawapan = [];
+
+    /*
+       Acak susunan soalan.
+       Setiap pilihan jawapan juga diacak.
+    */
+
+    soalanKuiz =
+        shuffle(
+            BANK_SOALAN
+        )
+        .slice(
+            0,
+            JUMLAH_SOALAN
+        )
+        .map(item => {
+
+            return {
+                ...item,
+                pilihan:
+                    shuffle(
+                        item.pilihan
+                    )
+            };
+        });
+
+    document
+        .getElementById(
+            "playerNameDisplay"
+        )
+        .textContent =
+        namaPelajar;
+
+    showScreen(
+        "screenKuiz"
+    );
+
+    paparkanSoalan();
+}
+
+
+/* ============================================================
+   PAPARKAN SOALAN
+============================================================ */
+
+function paparkanSoalan() {
+
+    clearInterval(
+        pemasa
+    );
+
+    const item =
+        soalanKuiz[
+            soalanSemasa
+        ];
+
+    masa = MASA_SOALAN;
+
+    document
+        .getElementById(
+            "nomborSoalan"
+        )
+        .textContent =
+        `Soalan ${soalanSemasa + 1}`;
+
+    document
+        .getElementById(
+            "progressText"
+        )
+        .textContent =
+        `${soalanSemasa + 1} / ${JUMLAH_SOALAN}`;
+
+    document
+        .getElementById(
+            "progressBar"
+        )
+        .style.width =
+        `${((soalanSemasa + 1) /
+        JUMLAH_SOALAN) * 100}%`;
+
+    document
+        .getElementById(
+            "soalan"
+        )
+        .textContent =
+        item.soalan;
+
+    const container =
+        document.getElementById(
+            "pilihanContainer"
+        );
+
+    container.innerHTML = "";
+
+    item.pilihan.forEach(
+        (pilihan, index) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "answer-btn w-full text-left " +
+                "p-5 rounded-2xl border-4 " +
+                "border-sky-200 bg-white " +
+                "hover:bg-sky-50 text-lg " +
+                "md:text-xl font-bold shadow-md";
+
+            const huruf =
+                index === 0
+                ? "A"
+                : "B";
+
+            button.innerHTML = `
+
+                <span class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    w-11 h-11
+                    rounded-full
+                    bg-sky-100
+                    text-sky-700
+                    mr-3
+                    font-extrabold">
+
+                    ${huruf}
+
+                </span>
+
+                ${pilihan}
+
+            `;
+
+            button.onclick =
+                () =>
+                    pilihJawapan(
+                        pilihan,
+                        button
+                    );
+
+            container.appendChild(
+                button
+            );
+        }
+    );
+
+    document
+        .getElementById(
+            "feedback"
+        )
+        .innerHTML = "";
+
+    document
+        .getElementById(
+            "nextBtn"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+    updateTimer();
+
+    pemasa =
+        setInterval(
+            () => {
+
+                masa--;
+
+                updateTimer();
+
+                if (masa <= 0) {
+
+                    clearInterval(
+                        pemasa
+                    );
+
+                    masaTamat();
+                }
+
+            },
+            1000
+        );
+}
+
+
+/* ============================================================
+   TIMER
+============================================================ */
+
+function updateTimer() {
+
+    const timer =
+        document.getElementById(
+            "timer"
+        );
+
+    timer.textContent =
+        masa;
+
+    const timerBox =
+        document.getElementById(
+            "timerBox"
+        );
+
+    if (masa <= 5) {
+
+        timerBox.classList.remove(
+            "bg-emerald-100",
+            "text-emerald-700",
+            "border-emerald-400"
+        );
+
+        timerBox.classList.add(
+            "bg-red-100",
+            "text-red-700",
+            "border-red-400",
+            "pulse-danger"
+        );
+
+    } else {
+
+        timerBox.classList.remove(
+            "bg-red-100",
+            "text-red-700",
+            "border-red-400",
+            "pulse-danger"
+        );
+
+        timerBox.classList.add(
+            "bg-emerald-100",
+            "text-emerald-700",
+            "border-emerald-400"
+        );
+    }
+}
+
+
+/* ============================================================
+   PILIH JAWAPAN
+============================================================ */
+
+function pilihJawapan(
+    pilihan,
+    button
+) {
+
+    clearInterval(
+        pemasa
+    );
+
+    const item =
+        soalanKuiz[
+            soalanSemasa
+        ];
+
+    const semuaButton =
+        document.querySelectorAll(
+            ".answer-btn"
+        );
+
+    semuaButton.forEach(
+        btn => {
+
+            btn.disabled = true;
+
+            btn.classList.add(
+                "disabled-choice"
+            );
+        }
+    );
+
+    const betul =
+        pilihan ===
+        item.jawapanBetul;
+
+    rekodJawapan.push({
+
+        soalan:
+            item.soalan,
+
+        jawapanPengguna:
+            pilihan,
+
+        jawapanBetul:
+            item.jawapanBetul,
+
+        betul:
+            betul
+    });
+
+
+    /* JAWAPAN BETUL */
+
+    if (betul) {
+
+        skor++;
+
+        button.classList.add(
+            "correct-answer"
+        );
+
+        bunyiBetul();
+
+        confetti();
+
+        document
+            .getElementById(
+                "feedback"
+            )
+            .innerHTML = `
+
+                <div class="
+                    pop
+                    bg-green-100
+                    border-4
+                    border-green-400
+                    text-green-800
+                    rounded-2xl
+                    p-4
+                    text-center">
+
+                    <div class="text-4xl">
+                        🎉
+                    </div>
+
+                    <div class="
+                        text-2xl
+                        font-extrabold">
+
+                        Syabas!
+                        Jawapan betul!
+
+                    </div>
+
+                </div>
+            `;
+
+    }
+
+
+    /* JAWAPAN SALAH */
+
+    else {
+
+        button.classList.add(
+            "wrong-answer"
+        );
+
+        bunyiSalah();
+
+        document
+            .getElementById(
+                "quizCard"
+            )
+            .classList.add(
+                "shake"
+            );
+
+        setTimeout(
+            () => {
+
+                document
+                    .getElementById(
+                        "quizCard"
+                    )
+                    .classList.remove(
+                        "shake"
+                    );
+
+            },
+            500
+        );
+
+
+        semuaButton.forEach(
+            btn => {
+
+                if (
+                    btn.textContent
+                        .trim()
+                        .includes(
+                            item.jawapanBetul
+                        )
+                ) {
+
+                    btn.classList.add(
+                        "correct-answer"
+                    );
+                }
+            }
+        );
+
+
+        document
+            .getElementById(
+                "feedback"
+            )
+            .innerHTML = `
+
+                <div class="
+                    pop
+                    bg-red-100
+                    border-4
+                    border-red-400
+                    text-red-800
+                    rounded-2xl
+                    p-4
+                    text-center">
+
+                    <div class="text-4xl">
+                        💡
+                    </div>
+
+                    <div class="
+                        text-xl
+                        font-extrabold">
+
+                        Belum tepat.
+
+                    </div>
+
+                    <div class="mt-1">
+
+                        Jawapan betul:
+                        <strong>
+                            ${item.jawapanBetul}
+                        </strong>
+
+                    </div>
+
+                </div>
+            `;
+    }
+
+    document
+        .getElementById(
+            "nextBtn"
+        )
+        .classList.remove(
+            "hidden"
+        );
+}
+
+
+/* ============================================================
+   MASA TAMAT
+============================================================ */
+
+function masaTamat() {
+
+    const item =
+        soalanKuiz[
+            soalanSemasa
+        ];
+
+    rekodJawapan.push({
+
+        soalan:
+            item.soalan,
+
+        jawapanPengguna:
+            "Masa tamat",
+
+        jawapanBetul:
+            item.jawapanBetul,
+
+        betul:
+            false
+    });
+
+
+    const semuaButton =
+        document.querySelectorAll(
+            ".answer-btn"
+        );
+
+    semuaButton.forEach(
+        btn => {
+
+            btn.disabled = true;
+
+            btn.classList.add(
+                "disabled-choice"
+            );
+
+            if (
+                btn.textContent
+                    .trim()
+                    .includes(
+                        item.jawapanBetul
+                    )
+            ) {
+
+                btn.classList.add(
+                    "correct-answer"
+                );
+            }
+        }
+    );
+
+    bunyiSalah();
+
+    document
+        .getElementById(
+            "feedback"
+        )
+        .innerHTML = `
+
+            <div class="
+                pop
+                bg-orange-100
+                border-4
+                border-orange-400
+                text-orange-800
+                rounded-2xl
+                p-4
+                text-center">
+
+                <div class="text-4xl">
+                    ⏰
+                </div>
+
+                <div class="
+                    text-xl
+                    font-extrabold">
+
+                    Masa tamat!
+
+                </div>
+
+                <div>
+
+                    Jawapan betul:
+                    <strong>
+                        ${item.jawapanBetul}
+                    </strong>
+
+                </div>
+
+            </div>
+        `;
+
+    document
+        .getElementById(
+            "nextBtn"
+        )
+        .classList.remove(
+            "hidden"
+        );
+}
+
+
+/* ============================================================
+   SOALAN SETERUSNYA
+============================================================ */
+
+function soalanSeterusnya() {
+
+    soalanSemasa++;
+
+    if (
+        soalanSemasa >=
+        JUMLAH_SOALAN
+    ) {
+
+        tamatKuiz();
+
+    } else {
+
+        paparkanSoalan();
+    }
+}
+
+
+/* ============================================================
+   TAMAT KUIZ
+============================================================ */
+
+function tamatKuiz() {
+
+    clearInterval(
+        pemasa
+    );
+
+    simpanPercubaan();
+
+    const peratus =
+        Math.round(
+            (skor / JUMLAH_SOALAN) *
+            100
+        );
+
+    document
+        .getElementById(
+            "namaKeputusan"
+        )
+        .textContent =
+        namaPelajar;
+
+    document
+        .getElementById(
+            "kelasKeputusan"
+        )
+        .textContent =
+        kelasPelajar;
+
+    document
+        .getElementById(
+            "skorKeputusan"
+        )
+        .textContent =
+        `Skor: ${skor}/${JUMLAH_SOALAN}`;
+
+    document
+        .getElementById(
+            "peratusKeputusan"
+        )
+        .textContent =
+        `${peratus}%`;
+
+
+    const status =
+        document.getElementById(
+            "statusKeputusan"
+        );
+
+
+    /* LULUS */
+
+    if (
+        peratus >=
+        AMBANG_LULUS
+    ) {
+
+        status.innerHTML = `
+
+            <div class="
+                text-green-700
+                font-extrabold
+                text-2xl">
+
+                🎉 TAHNIAH!
+                ANDA LULUS!
+
+            </div>
+
+            <p class="text-green-700 mt-1">
+
+                Teruskan mengamalkan
+                selawat dan mencintai
+                Rasulullah ﷺ.
+
+            </p>
+        `;
+
+        document
+            .getElementById(
+                "sijilBtn"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+        confetti();
+
+    }
+
+
+    /* BELUM LULUS */
+
+    else {
+
+        status.innerHTML = `
+
+            <div class="
+                text-orange-700
+                font-extrabold
+                text-2xl">
+
+                🌱 TERUSKAN USAHA!
+
+            </div>
+
+            <p class="text-orange-700">
+
+                Ulang kaji dan cuba lagi.
+                Anda pasti boleh!
+
+            </p>
+        `;
+
+        document
+            .getElementById(
+                "sijilBtn"
+            )
+            .classList.add(
+                "hidden"
+            );
+    }
+
+    binaSemakan();
+
+    showScreen(
+        "screenKeputusan"
+    );
+}
+
+
+/* ============================================================
+   SEMAKAN PENUH
+============================================================ */
+
+function binaSemakan() {
+
+    const container =
+        document.getElementById(
+            "semakanContainer"
+        );
+
+    container.innerHTML = "";
+
+    rekodJawapan.forEach(
+        (rekod, index) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                `p-4 rounded-2xl border-2
+                ${
+                    rekod.betul
+                    ? "bg-green-50 border-green-300"
+                    : "bg-red-50 border-red-300"
+                }`;
+
+            item.innerHTML = `
+
+                <div class="
+                    flex
+                    gap-3
+                    items-start">
+
+                    <div class="text-2xl">
+
+                        ${
+                            rekod.betul
+                            ? "✅"
+                            : "❌"
+                        }
+
+                    </div>
+
+                    <div class="flex-1">
+
+                        <div class="
+                            font-extrabold
+                            text-lg">
+
+                            ${index + 1}.
+                            ${rekod.soalan}
+
+                        </div>
+
+                        <div class="mt-2">
+
+                            <span class="font-bold">
+                                Jawapan murid:
+                            </span>
+
+                            ${rekod.jawapanPengguna}
+
+                        </div>
+
+                        <div class="
+                            mt-1
+                            text-green-700">
+
+                            <span class="font-bold">
+                                Jawapan sebenar:
+                            </span>
+
+                            ${rekod.jawapanBetul}
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+
+            container.appendChild(
+                item
+            );
+        }
+    );
+}
+
+
+/* ============================================================
+   JANA SIJIL
+============================================================ */
+
+function janaSijil() {
+
+    const peratus =
+        Math.round(
+            (skor / JUMLAH_SOALAN) *
+            100
+        );
+
+    document
+        .getElementById(
+            "certNama"
+        )
+        .textContent =
+        namaPelajar;
+
+    document
+        .getElementById(
+            "certKelas"
+        )
+        .textContent =
+        `Kelas: ${kelasPelajar}`;
+
+    document
+        .getElementById(
+            "certSkor"
+        )
+        .textContent =
+        `Skor: ${skor}/${JUMLAH_SOALAN} (${peratus}%)`;
+
+    document
+        .getElementById(
+            "certTarikh"
+        )
+        .textContent =
+        `Tarikh: ${
+            new Date()
+                .toLocaleDateString(
+                    "ms-MY"
+                )
+        }`;
+
+    document
+        .getElementById(
+            "certificate"
+        )
+        .style.display =
+        "flex";
+
+    window.print();
+
+    setTimeout(
+        () => {
+
+            document
+                .getElementById(
+                    "certificate"
+                )
+                .style.display =
+                "none";
+
+        },
+        1000
+    );
+}
+
+
+/* ============================================================
+   CUBA LAGI
+============================================================ */
+
+function cubaLagi() {
+
+    mulaPermainan();
+}
+
+
+/* ============================================================
+   KEMBALI MENU
+============================================================ */
+
+function kembaliMenu() {
+
+    clearInterval(
+        pemasa
+    );
+
+    document
+        .getElementById(
+            "nama"
+        )
+        .value =
+        namaPelajar;
+
+    document
+        .getElementById(
+            "kelas"
+        )
+        .value =
+        kelasPelajar;
+
+    semakInput();
+
+    showScreen(
+        "screenMenu"
+    );
+}
+
+
+/* ============================================================
+   EVENT INPUT
+============================================================ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        document
+            .getElementById(
+                "nama"
+            )
+            .addEventListener(
+                "input",
+                semakInput
+            );
+
+        document
+            .getElementById(
+                "kelas"
+            )
+            .addEventListener(
+                "input",
+                semakInput
+            );
+
+        semakInput();
+    }
+);
+
+</script>
+
+
+<!-- =========================================================
+     SKRIN 1 — MENU UTAMA
+========================================================== -->
+
+<section id="screenMenu"
+         class="screen min-h-screen flex items-center justify-center p-4">
+
+    <div class="
+        glass
+        max-w-xl
+        w-full
+        rounded-[2rem]
+        shadow-2xl
+        border-4
+        border-white
+        p-6
+        md:p-10">
+
+        <div class="text-center">
+
+            <div class="text-7xl mb-3">
+                ☪️📚🌟
+            </div>
+
+            <div class="
+                inline-block
+                bg-emerald-100
+                text-emerald-700
+                px-4
+                py-1
+                rounded-full
+                font-bold">
+
+                PENDIDIKAN ISLAM
+                • TAHUN 1
+
+            </div>
+
+            <h1 class="
+                text-3xl
+                md:text-5xl
+                font-extrabold
+                text-sky-700
+                leading-tight
+                mt-3">
+
+                ULANGKAJI
+                <br>
+                PENDIDIKAN ISLAM
+                <br>
+                TAHUN 1
+
+            </h1>
+
+            <p class="
+                text-xl
+                md:text-2xl
+                text-slate-600
+                font-bold
+                mt-4">
+
+                🌙 Rasulullah ﷺ Ikutanku
+
+            </p>
+
+            <p class="
+                text-lg
+                text-emerald-700
+                font-bold">
+
+                Topik: ADAB & SELAWAT 🌟
+
+            </p>
+
+        </div>
+
+
+        <div class="mt-8 space-y-4">
+
+            <div>
+
+                <label class="
+                    block
+                    text-lg
+                    font-bold
+                    text-slate-700
+                    mb-2">
+
+                    👧👦 Nama Murid
+
+                </label>
+
+                <input
+                    id="nama"
+                    type="text"
+                    placeholder="Masukkan nama murid..."
+                    class="
+                        w-full
+                        p-4
+                        rounded-2xl
+                        border-4
+                        border-sky-200
+                        focus:border-sky-500
+                        focus:outline-none
+                        text-xl
+                        font-bold">
+
+            </div>
+
+
+            <div>
+
+                <label class="
+                    block
+                    text-lg
+                    font-bold
+                    text-slate-700
+                    mb-2">
+
+                    🏫 Kelas
+
+                </label>
+
+                <input
+                    id="kelas"
+                    type="text"
+                    placeholder="Contoh: 1 Bestari"
+                    class="
+                        w-full
+                        p-4
+                        rounded-2xl
+                        border-4
+                        border-sky-200
+                        focus:border-sky-500
+                        focus:outline-none
+                        text-xl
+                        font-bold">
+
+            </div>
+
+
+            <button
+                id="mulaBtn"
+                onclick="mulaKuiz()"
+                disabled
+                class="
+                    btn-main
+                    w-full
+                    p-5
+                    rounded-2xl
+                    bg-gradient-to-r
+                    from-sky-500
+                    to-emerald-500
+                    text-white
+                    text-2xl
+                    font-extrabold
+                    shadow-lg
+                    disabled:opacity-40
+                    disabled:cursor-not-allowed">
+
+                🚀 MULA KUIZ
+
+            </button>
+
+        </div>
+
+
+        <div class="
+            mt-6
+            text-center
+            text-slate-500
+            text-lg">
+
+            <p>📝 20 soalan</p>
+
+            <p>⏱️ 60 saat setiap soalan</p>
+
+            <p>🏆 Ambang lulus: 50%</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SKRIN 2 — ARAHAN
+========================================================== -->
+
+<section id="screenArahan"
+         class="
+            screen
+            hidden
+            min-h-screen
+            flex
+            items-center
+            justify-center
+            p-4">
+
+    <div class="
+        glass
+        max-w-2xl
+        w-full
+        rounded-[2rem]
+        shadow-2xl
+        border-4
+        border-white
+        p-6
+        md:p-10">
+
+        <div class="text-center">
+
+            <div class="text-6xl">
+                🎮🌟
+            </div>
+
+            <h2 class="
+                text-3xl
+                md:text-4xl
+                font-extrabold
+                text-sky-700
+                mt-3">
+
+                ARAHAN PERMAINAN
+
+            </h2>
+
+        </div>
+
+
+        <div class="
+            mt-7
+            space-y-4
+            text-lg
+            md:text-xl">
+
+            <div class="
+                bg-sky-50
+                p-4
+                rounded-2xl">
+
+                🔹 Jawab
+                <strong>20 soalan</strong>.
+
+            </div>
+
+            <div class="
+                bg-emerald-50
+                p-4
+                rounded-2xl">
+
+                🔹 Setiap soalan mempunyai
+                <strong>2 pilihan jawapan</strong>.
+
+            </div>
+
+            <div class="
+                bg-yellow-50
+                p-4
+                rounded-2xl">
+
+                🔹 Masa menjawab ialah
+                <strong>60 saat</strong> bagi setiap soalan.
+
+            </div>
+
+            <div class="
+                bg-red-50
+                p-4
+                rounded-2xl">
+
+                🔹 Apabila masa tinggal
+                <strong>5 saat</strong>, timer akan menjadi merah.
+
+            </div>
+
+            <div class="
+                bg-purple-50
+                p-4
+                rounded-2xl">
+
+                🔹 Jawapan betul mendapat
+                🎉 <strong>confetti dan bunyi sorakan</strong>.
+
+            </div>
+
+            <div class="
+                bg-orange-50
+                p-4
+                rounded-2xl">
+
+                🔹 Jawapan salah akan menunjukkan
+                <strong>jawapan sebenar</strong>.
+
+            </div>
+
+            <div class="
+                bg-green-50
+                p-4
+                rounded-2xl">
+
+                🔹 Skor
+                <strong>50% atau lebih</strong>
+                layak mendapat sijil.
+
+            </div>
+
+        </div>
+
+
+        <button
+            onclick="mulaPermainan()"
+            class="
+                btn-main
+                w-full
+                mt-8
+                p-5
+                rounded-2xl
+                bg-gradient-to-r
+                from-emerald-500
+                to-sky-500
+                text-white
+                text-2xl
+                font-extrabold
+                shadow-lg">
+
+            🚀 SAYA SUDAH BERSEDIA!
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SKRIN 3 — KUIZ
+========================================================== -->
+
+<section id="screenKuiz"
+         class="
+            screen
+            hidden
+            min-h-screen
+            p-4">
+
+    <div class="max-w-3xl mx-auto">
+
+        <!-- HEADER KUIZ -->
+
+        <div class="
+            glass
+            rounded-2xl
+            p-4
+            mb-4
+            shadow-lg
+            border-2
+            border-white">
+
+            <div class="
+                flex
+                flex-col
+                md:flex-row
+                justify-between
+                items-center
+                gap-3">
+
+                <div>
+
+                    <div class="
+                        font-bold
+                        text-slate-500">
+
+                        Murid
+
+                    </div>
+
+                    <div class="
+                        font-extrabold
+                        text-sky-700
+                        text-lg">
+
+                        <span id="playerNameDisplay"></span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="timerBox"
+                    class="
+                        border-4
+                        rounded-2xl
+                        px-5
+                        py-2
+                        bg-emerald-100
+                        text-emerald-700
+                        border-emerald-400
+                        font-extrabold
+                        text-2xl">
+
+                    ⏱️
+                    <span id="timer">
+                        60
+                    </span>
+                    s
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="mt-4">
+
+                <div class="
+                    flex
+                    justify-between
+                    font-bold
+                    text-slate-600
+                    mb-2">
+
+                    <span id="nomborSoalan">
+                        Soalan 1
+                    </span>
+
+                    <span id="progressText">
+                        1 / 20
+                    </span>
+
+                </div>
+
+                <div class="
+                    w-full
+                    h-4
+                    bg-slate-200
+                    rounded-full
+                    overflow-hidden">
+
+                    <div
+                        id="progressBar"
+                        class="
+                            h-full
+                            bg-gradient-to-r
+                            from-sky-500
+                            to-emerald-500
+                            transition-all
+                            duration-500"
+                        style="width:5%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- KAD SOALAN -->
+
+        <div
+            id="quizCard"
+            class="
+                glass
+                rounded-[2rem]
+                shadow-2xl
+                border-4
+                border-white
+                p-5
+                md:p-8">
+
+            <div class="
+                text-center
+                mb-7">
+
+                <div class="text-5xl mb-3">
+                    🧠
+                </div>
+
+                <h2
+                    id="soalan"
+                    class="
+                        text-2xl
+                        md:text-3xl
+                        font-extrabold
+                        text-slate-800
+                        leading-relaxed">
+
+                </h2>
+
+            </div>
+
+
+            <!-- PILIHAN -->
+
+            <div
+                id="pilihanContainer"
+                class="space-y-4">
+
+            </div>
+
+
+            <!-- FEEDBACK -->
+
+            <div
+                id="feedback"
+                class="mt-5">
+
+            </div>
+
+
+            <!-- NEXT -->
+
+            <button
+                id="nextBtn"
+                onclick="soalanSeterusnya()"
+                class="
+                    hidden
+                    btn-main
+                    w-full
+                    mt-5
+                    p-4
+                    rounded-2xl
+                    bg-sky-600
+                    hover:bg-sky-700
+                    text-white
+                    text-xl
+                    font-extrabold
+                    shadow-lg">
+
+                SOALAN SETERUSNYA ➡️
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SKRIN 4 — KEPUTUSAN
+========================================================== -->
+
+<section
+    id="screenKeputusan"
+    class="
+        screen
+        hidden
+        min-h-screen
+        p-4">
+
+    <div class="max-w-4xl mx-auto">
+
+        <div class="
+            glass
+            rounded-[2rem]
+            shadow-2xl
+            border-4
+            border-white
+            p-6
+            md:p-10">
+
+
+            <div class="text-center">
+
+                <div class="text-7xl">
+                    🏆
+                </div>
+
+                <h1 class="
+                    text-4xl
+                    md:text-5xl
+                    font-extrabold
+                    text-sky-700">
+
+                    KEPUTUSAN
+
+                </h1>
+
+                <p class="
+                    text-xl
+                    text-slate-600
+                    mt-2">
+
+                    Tahniah,
+                    <strong
+                        id="namaKeputusan">
+                    </strong>!
+
+                </p>
+
+                <p class="
+                    text-lg
+                    text-slate-500">
+
+                    Kelas:
+                    <strong
+                        id="kelasKeputusan">
+                    </strong>
+
+                </p>
+
+            </div>
+
+
+            <!-- SKOR -->
+
+            <div class="
+                my-8
+                text-center
+                bg-gradient-to-r
+                from-sky-50
+                to-emerald-50
+                rounded-3xl
+                p-7">
+
+                <p class="
+                    text-xl
+                    font-bold
+                    text-slate-500">
+
+                    SKOR ANDA
+
+                </p>
+
+                <div
+                    id="skorKeputusan"
+                    class="
+                        text-5xl
+                        md:text-7xl
+                        font-extrabold
+                        text-emerald-600">
+
+                    Skor: 0/20
+
+                </div>
+
+                <div
+                    id="peratusKeputusan"
+                    class="
+                        text-2xl
+                        font-bold
+                        text-sky-600">
+
+                    0%
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="statusKeputusan"
+                class="text-center mb-8">
+
+            </div>
+
+
+            <!-- BUTANG -->
+
+            <div
+                class="
+                    grid
+                    md:grid-cols-3
+                    gap-3
+                    mb-8">
+
+                <button
+                    id="sijilBtn"
+                    onclick="janaSijil()"
+                    class="
+                        btn-main
+                        hidden
+                        p-4
+                        rounded-2xl
+                        bg-gradient-to-r
+                        from-yellow-400
+                        to-orange-500
+                        text-white
+                        text-lg
+                        font-extrabold
+                        shadow-lg">
+
+                    🏅 Jana Sijil
+
+                </button>
+
+
+                <button
+                    onclick="cubaLagi()"
+                    class="
+                        btn-main
+                        p-4
+                        rounded-2xl
+                        bg-emerald-500
+                        hover:bg-emerald-600
+                        text-white
+                        text-lg
+                        font-extrabold
+                        shadow-lg">
+
+                    🔄 Cuba Lagi
+
+                </button>
+
+
+                <button
+                    onclick="kembaliMenu()"
+                    class="
+                        btn-main
+                        p-4
+                        rounded-2xl
+                        bg-sky-500
+                        hover:bg-sky-600
+                        text-white
+                        text-lg
+                        font-extrabold
+                        shadow-lg">
+
+                    🏠 Kembali ke Menu
+
+                </button>
+
+            </div>
+
+
+            <!-- SEMAKAN -->
+
+            <div>
+
+                <h2 class="
+                    text-2xl
+                    md:text-3xl
+                    font-extrabold
+                    text-slate-700
+                    mb-4">
+
+                    📋 Semakan Jawapan
+
+                </h2>
+
+                <div
+                    id="semakanContainer"
+                    class="space-y-3">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SIJIL
+========================================================== -->
+
+<div
+    id="certificate"
+    class="
+        fixed
+        inset-0
+        bg-white
+        items-center
+        justify-center
+        p-8">
+
+    <div
+        class="
+            w-full
+            h-full
+            border-[12px]
+            border-double
+            border-emerald-600
+            flex
+            flex-col
+            items-center
+            justify-center
+            text-center
+            p-10">
+
+        <div class="text-7xl mb-2">
+            🏆
+        </div>
+
+        <div class="
+            text-2xl
+            font-bold
+            tracking-widest
+            text-emerald-700">
+
+            SIJIL PENCAPAIAN
+
+        </div>
+
+        <h1 class="
+            text-5xl
+            font-extrabold
+            text-sky-700
+            mt-5">
+
+            PENDIDIKAN ISLAM TAHUN 1
+
+        </h1>
+
+        <p class="
+            text-2xl
+            mt-8">
+
+            Dengan sukacitanya dianugerahkan kepada
+
+        </p>
+
+        <div
+            id="certNama"
+            class="
+                text-5xl
+                font-extrabold
+                text-emerald-700
+                mt-4
+                border-b-4
+                border-emerald-500
+                px-10
+                pb-2">
+
+        </div>
+
+        <div
+            id="certKelas"
+            class="
+                text-2xl
+                font-bold
+                mt-4">
+
+        </div>
+
+        <p class="
+            text-2xl
+            mt-7">
+
+            atas pencapaian dalam kuiz
+
+        </p>
+
+        <p class="
+            text-3xl
+            font-extrabold
+            text-sky-700
+            mt-2">
+
+            “Rasulullah ﷺ Ikutanku – ADAB & SELAWAT”
+
+        </p>
+
+        <div
+            id="certSkor"
+            class="
+                text-2xl
+                font-bold
+                mt-6">
+
+        </div>
+
+        <div
+            id="certTarikh"
+            class="
+                text-lg
+                mt-8
+                text-slate-500">
+
+        </div>
+
+        <div class="
+            mt-8
+            text-xl">
+
+            🌟 Teruskan berselawat dan mencintai Rasulullah ﷺ 🌟
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
